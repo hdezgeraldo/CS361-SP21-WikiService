@@ -1,6 +1,6 @@
 # CS361-SP21-WikiService
 
-This is a simple Wikipedia Image Scraper Service using;
+This is a simple Wikipedia Image Scraper Service using:
 
 -   Python
 -   Flask
