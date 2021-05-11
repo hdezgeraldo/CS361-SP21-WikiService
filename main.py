@@ -34,13 +34,16 @@ def index():
     soup = BeautifulSoup(source, 'lxml')
 
     # Search for the first poster image in wikipedia article and get its source
-    infobox = soup.find('td', class_='infobox-image')
-    imagebox = infobox.find('img')
-    imageSource = imagebox['src']
+    if soup.find('td', class_='infobox-image') :
+        infobox = soup.find('td', class_='infobox-image')
+        imagebox = infobox.find('img')
+        imageSource = imagebox['src']
 
-    results = {
-        "imageURL": imageSource
-    }
+        results = {
+            "imageURL": imageSource
+        }
+    else:
+        results = "Wikipedia article not found"
 
     # Return data in JSON format
     return results
