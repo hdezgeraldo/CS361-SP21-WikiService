@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>My Wiki Image Scrapper</title>
+    </head>
+    <body>
+        <section class="tutorial">
+            <h1
+                style="
+                    display: block;
+                    padding-bottom: 10px;
+                    border-bottom: 2px solid #e7e9eb;
+                    text-align: center;
+                "
+            >
+                Welcome to my Image Scrapper
+            </h1>
+            <p>
+                You can access my program by passing your GET or POST parameters
+                via the <strong style="color: red">/image-scrapper</strong> page
+                on this web app
+            </p>
+
+            <div
+                class="tutorial-box"
+                style="background: #e7e9eb; margin: 0 10px; padding: 10px"
+            >
+                <h3>GET method</h3>
+                <ul style="padding-left: 15px">
+                    <li>
+                        After the URL web address has ended, we include a
+                        question mark (?) followed by the name/value pairs:
+                    </li>
+                    <li>
+                        Make sure that the "key" is "site", and that your
+                        "value" is the Wikipedia URL
+                    </li>
+                    <li>
+                        Don't forget to replace the URL example with the actual
+                        URL for this web app
+                    </li>
+                </ul>
+                <div
+                    class="code-example"
+                    style="
+                        background: white;
+                        padding: 10px;
+                        border-left: 3px solid green;
+                    "
+                >
+                    <p>
+                        http://127.0.0.1:8080/image-scrapper?site=<strong
+                            style="color: red"
+                            >YOURURL</strong
+                        >
+                    </p>
+                </div>
+
+                <h3>JSON formatted Response</h3>
+                <div
+                    class="code-example"
+                    style="
+                        background: white;
+                        padding: 10px;
+                        border-left: 3px solid green;
+                    "
+                >
+                    <p>
+                        { "imageURL":
+                        "//upload.wikimedia.org/wikipedia/en/8/8a/generic_image.jpg"
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="tutorial-box"
+                style="
+                    background: #e7e9eb;
+                    margin: 0 10px;
+                    padding: 10px;
+                    margin-top: 20px;
+                "
+            >
+                <h3>POST method</h3>
+                <ul>
+                    <li>
+                        You can make a JSON POST request to this web app's
+                        /image-scrapper page
+                    </li>
+                    <li>
+                        Make sure that the "key" is "site", and that your
+                        "value" is the Wikipedia URL
+                    </li>
+                </ul>
+
+                <div
+                    class="code-example"
+                    style="
+                        background: white;
+                        padding: 10px;
+                        border-left: 3px solid green;
+                    "
+                >
+                    <p>
+                        { "site": "<strong style="color: red">YOURURL</strong>"
+                        }
+                    </p>
+                </div>
+
+                <h3>JSON formatted Response</h3>
+                <div
+                    class="code-example"
+                    style="
+                        background: white;
+                        padding: 10px;
+                        border-left: 3px solid green;
+                    "
+                >
+                    <p>
+                        { "imageURL":
+                        "//upload.wikimedia.org/wikipedia/en/8/8a/generic_image.jpg"
+                        }
+                    </p>
+                </div>
+            </div>
+
+            <div
+                class="note-box"
+                style="
+                    margin-top: 20px;
+                    margin-left: 0;
+                    margin-right: 0;
+                    padding: 15px;
+                    background: #ffffcc;
+                "
+            >
+                <p>
+                    <strong>Note:</strong> Don't forget to access the app within
+                    the /image-scrapper page
+                </p>
+            </div>
+        </section>
+    </body>
+</html>

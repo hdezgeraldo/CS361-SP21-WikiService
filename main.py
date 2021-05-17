@@ -10,43 +10,85 @@
 import logging
 import requests
 import json
-from flask import Flask, request, jsonify
+from flask import Flask, request, abort, render_template
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 
-@app.route('/', methods=['POST'])
-def index():
-    # Obtain POST request
-    data = request.json
+# Name: wikiScrapper
+# @Param: string - HTTP URL string
+# Description: This function will scrap a valid Wikipedia article for
+# the first image
+def wikiScrapper(string):
+    # Hold expected URL string to only run with Wiki links
+    wikiValidator = "https://en.wikipedia.org/wiki/"
 
-    # Dump JSON object to variable
-    json_str = json.dumps(data)
+    if string.startswith(wikiValidator):
 
-    # Load JSON to string
-    resp = json.loads(json_str)
+        source = requests.get(string).text
+        soup = BeautifulSoup(source, 'lxml')
 
-    # Concatenate result to a string
-    siteURL = 'https://en.wikipedia.org/wiki/' + str((resp['site']))
+        # Search for the first poster image in wikipedia article and get its source
+        if soup.find('td', class_='infobox-image') :
+            infobox = soup.find('td', class_='infobox-image')
+            imagebox = infobox.find('img')
+            imageSource = imagebox['src']
 
-    # Start request to Wikipedia page
-    source = requests.get(siteURL).text
-    soup = BeautifulSoup(source, 'lxml')
+            results = {
+                "imageURL": imageSource
+            }
+        else:
+            results = "Wikipedia article not found"
 
-    # Search for the first poster image in wikipedia article and get its source
-    if soup.find('td', class_='infobox-image') :
-        infobox = soup.find('td', class_='infobox-image')
-        imagebox = infobox.find('img')
-        imageSource = imagebox['src']
+        # Return data in JSON format
+        return results
 
-        results = {
-            "imageURL": imageSource
-        }
     else:
-        results = "Wikipedia article not found"
+        return "<h1>this isn't a valid WIKI link</h1>"
 
-    # Return data in JSON format
-    return results
+# Homepage: shows API instructions
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Image Scrapper: Holds image scrapper app
+@app.route('/image-scrapper', methods=['GET', 'POST'])
+def my_request():
+    # Verify if GET response
+    if request.method == 'GET':
+        # Get all URL parameters
+        URLparams = request.args.get('url', type=str)
+
+        # Show user error page if incorrect URL parameters
+        if not URLparams:
+            abort(404)
+
+        else:
+            # run wikiScrapper program
+            return wikiScrapper(URLparams)
+
+    # Verify if POST response
+    elif request.method == 'POST':
+        # Obtain POST request
+        data = request.json
+
+        # Dump JSON object to variable
+        json_str = json.dumps(data)
+
+        # Load JSON to string
+        resp = json.loads(json_str)
+
+        # hold JSON string response
+        userResponse = str((resp['url']))
+
+        # run wikiScrapper program
+        return wikiScrapper(userResponse)
+
+
+# Custom Error page
+@app.errorhandler(404)
+def page_not_found(error):
+   return render_template('404.html', title = '404'), 404
 
 
 @app.errorhandler(500)
