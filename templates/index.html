@@ -19,9 +19,12 @@
                 Welcome to my Image Scrapper
             </h1>
             <p>
-                You can access my program by passing your GET or POST parameters
-                via the <strong style="color: red">/image-scrapper</strong> page
-                on this web app
+                <strong>Description: </strong>You can access my program by
+                passing your GET or POST parameters via the
+                <strong style="color: red">/image-scrapper</strong> page on this
+                web app. This app will find the FIRST poster or thumbnail image
+                in a given Wikipedia article, and will return its HTTP image
+                URL.
             </p>
 
             <div
@@ -35,8 +38,8 @@
                         question mark (?) followed by the name/value pairs:
                     </li>
                     <li>
-                        Make sure that the "key" is "site", and that your
-                        "value" is the Wikipedia URL
+                        Make sure that the "key" is "url", and that your "value"
+                        is the Wikipedia URL
                     </li>
                     <li>
                         Don't forget to replace the URL example with the actual
@@ -52,9 +55,9 @@
                     "
                 >
                     <p>
-                        http://127.0.0.1:8080/image-scrapper?site=<strong
+                        https://mypyimagescrapper.ue.r.appspot.com/image-scrapper?url=<strong
                             style="color: red"
-                            >YOURURL</strong
+                            >https://en.wikipedia.org/wiki/Oregon_State_University</strong
                         >
                     </p>
                 </div>
@@ -92,8 +95,8 @@
                         /image-scrapper page
                     </li>
                     <li>
-                        Make sure that the "key" is "site", and that your
-                        "value" is the Wikipedia URL
+                        Make sure that the "key" is "url", and that your "value"
+                        is the Wikipedia URL
                     </li>
                 </ul>
 
@@ -106,8 +109,9 @@
                     "
                 >
                     <p>
-                        { "site": "<strong style="color: red">YOURURL</strong>"
-                        }
+                        { "url": "<strong style="color: red"
+                            >https://en.wikipedia.org/wiki/Oregon_State_University</strong
+                        >" }
                     </p>
                 </div>
 

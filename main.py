@@ -10,10 +10,14 @@
 import logging
 import requests
 import json
-from flask import Flask, request, abort, render_template
+from flask import Flask, request, abort, render_template, jsonify
+from flask_cors import CORS
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+
+# Include Flask CORS in application
+CORS(app)
 
 # Name: wikiScrapper
 # @Param: string - HTTP URL string
@@ -28,20 +32,34 @@ def wikiScrapper(string):
         source = requests.get(string).text
         soup = BeautifulSoup(source, 'lxml')
 
-        # Search for the first poster image in wikipedia article and get its source
-        if soup.find('td', class_='infobox-image') :
-            infobox = soup.find('td', class_='infobox-image')
-            imagebox = infobox.find('img')
-            imageSource = imagebox['src']
+        # Check if Wikipedia link shows results
+        if soup.find('div', class_='mw-body'):
 
-            results = {
-                "imageURL": imageSource
-            }
+            # Search for the first poster image in wikipedia article and get its source
+            if soup.find('td', class_='infobox-image'):
+                infobox = soup.find('td', class_='infobox-image')
+                imagebox = infobox.find('img')
+                imageSource = imagebox['src']
+
+                results = {
+                    "imageURL": imageSource
+                }
+            elif soup.find('div', class_="thumb"):
+                thumb = soup.find('div', class_="thumb")
+                thumbImage = thumb.find('img')
+                imageSource = thumbImage['src']
+
+                results = {
+                    "imageURL": imageSource
+                }
+            else:
+                results = "No Poster or Thumbnail images found inside article"
+
         else:
             results = "Wikipedia article not found"
 
         # Return data in JSON format
-        return results
+        return jsonify(results)
 
     else:
         return "<h1>this isn't a valid WIKI link</h1>"
